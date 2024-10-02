@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our cart</title>
+    <link rel="stylesheet" href="style.css ">
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="script.js">
+    <link rel="stylesheet" href="cart.js">
+    <link rel="stylesheet" href="cartfull.js">
+<style>* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #ff4081;
+    color: white;
+}
+
+.cart {
+    font-size: 18px;
+}
+
+#go-to-cart {
+    margin-left: 15px;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#search {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+}
+
+#categories {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.product {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    width: 30%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    background-color: white;
+    transition: transform 0.2s;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product h2 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.product .price {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.product .rating {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+#cart {
+    margin-top: 20px;
+    border-top: 2px solid #333;
+    padding-top: 10px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+#cart-items {
+    margin: 10px 0;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#checkout-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+</style>
+</head>
+<body>
+    <header>
+
+
+
+        <div class="header-2">
+
+            <div id="menu-bar" class="fas fa-bars"></div>
+
+            <nav class="navbar">
+                <a href="index.html">home</a>
+                <a href="#">Cart</a>
+                <a href="about.html">About food </a>
+                <a href="prduct.html">product</a>
+                <a href="deels.html">deal</a>
+                <a href="contect.html">contact</a>
+            </nav>
+
+            <div class="icons">
+                <a href="#" class="fas fa-shopping-cart"></a>
+                <a href="#" class="fas fa-heart"></a>
+                <a href="#" class="fas fa-user-circle"></a>
+            </div>
+
+        </div>
+
+    </header>
+    <header>
+        <h1>Cart Items</h1>
+        <div class="cart">
+            <span id="cart-count">0</span> items in cart
+            <button id="go-to-cart" onclick="scrollToCart()">Go to Cart</button>
+        </div>
+        <input type="text" id="search" placeholder="Search products..." oninput="filterProducts()">
+    </header>
+    
+    <main>
+        <section id="categories">
+            <button onclick="filterByCategory('All')">All</button>
+            <button onclick="filterByCategory('Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber')">Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber</button>
+            <button onclick="filterByCategory('Kapsalon')">Kapsalon</button>
+            <button onclick="filterByCategory('Lamb Tzatziki Burgers')">Lamb Tzatziki Burgers</button>
+               <button onclick="filterByCategory('Lamb Tzatziki Burgers')"> Nasi lemak </button>
+               <button onclick="filterByCategory('Vietnamese Grilled Pork (bun-thit-nuong)')"> Vietnamese Grilled Pork (bun-thit-nuong) </button>
+               <button onclick="filterByCategory('Sushi')"> Sushi</button>
+        </section>
+        
+        <section id="products">
+            <div class="product" data-category="Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber">
+                <img src="https://www.themealdb.com/images/media/meals/0206h11699013358.jpg" alt="Pizza">
+                <h2>Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber</h2>
+                <p>Delicious Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber with fresh ingredients.</p>
+                <p class="price">$12</p>
+                <p class="rating">⭐⭐⭐⭐☆</p>
+                <button onclick="addToCart('Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber', 12)">Add to Cart</button>
+            </div>
+            <div class="product" data-category="Kapsalon">
+                <img src="https://www.themealdb.com/images/media/meals/sxysrt1468240488.jpg" alt="Kapsalonr">
+                <h2>Kapsalon</h2>
+                <p>Juicy Kapsalon with lettuce and tomato.</p>
+                <p class="price">$8</p>
+                <p class="rating">⭐⭐⭐⭐⭐</p>
+                <button onclick="addToCart('Kapsalon', 8)">Add to Cart</button>
+            </div>
+            <div class="product" data-category="Lamb Tzatziki Burgers">
+                <img src="https://www.themealdb.com/images/media/meals/k420tj1585565244.jpg" alt="Lamb Tzatziki Burgers">
+                <h2>Lamb Tzatziki Burgers</h2>
+                <p>Fresh Lamb Tzatziki Burgers.</p>
+                <p class="price">$15</p>
+                <p class="rating">⭐⭐⭐⭐☆</p>
+                <button onclick="addToCart('Lamb Tzatziki Burgers', 15)">Add to Cart</button>
+            </div>
+            <div class="product" data-category="Nasi lemak">
+                <img src="https://www.themealdb.com/images/media/meals/k420tj1585565244.jpg" alt="Lamb Tzatziki Burgers">
+                <h2>Nasi lemak</h2>
+                <p>Fresh Nasi lemak.</p>
+                <p class="price">$15</p>
+                <p class="rating">⭐⭐⭐⭐☆</p>
+                <button onclick="addToCart('Nasi lemak', 15)">Add to Cart</button>
+            </div>
+            <div class="product" data-category="Nasi lemak">
+                <img src="https://www.themealdb.com/images/media/meals/1549542994.jpg" alt="Salmon Avocado Salad">
+                <h2>Salmon Avocado Salad</h2>
+                <p>Fresh Salmon Avocado Salad.</p>
+                <p class="price">$15</p>
+                <p class="rating">⭐⭐⭐⭐☆</p>
+                <button onclick="addToCart('Vietnamese Grilled Pork (bun-thit-nuong)', 15)">Add to Cart</button>
+            </div>
+            <div class="product" data-category="Vietnamese Grilled Pork (bun-thit-nuong)">
+                <img src="https://www.themealdb.com/images/media/meals/qqwypw1504642429.jpg" alt="Sushi">
+                <h2>Sushi</h2>
+                <p>Fresh Vietnamese Grilled Pork (bun-thit-nuong).</p>
+                <p class="price">$15</p>
+                <p class="rating">⭐⭐⭐⭐☆</p>
+                <button onclick="addToCart('Vietnamese Grilled Pork (bun-thit-nuong)', 15)">Add to Cart</button>
+            </div>
+            <div class="product" data-category="Nasi lemak">
+                <img src="https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg" alt="Sushi">
+                <h2>Sushi</h2>
+                <p>Fresh Sushi.</p>
+                <p class="price">$15</p>
+                <p class="rating">⭐⭐⭐⭐☆</p>
+                <button onclick="addToCart('Sushi', 15)">Add to Cart</button>
+            </div>
+        </section>
+
+        <section id="cart">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items"></div>
+            <div id="total">Total: $0</div>
+            <button id="checkout-button" onclick="openCheckoutModal()">Checkout</button>
+        </section>
+    </main>
+
+    <div id="notification" class="notification"></div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCheckoutModal()">&times;</span>
+            <h2>Checkout Confirmation</h2>
+            <p>Proceeding to checkout with a total of $<span id="checkout-total">0.00</span>?</p>
+            <button id="confirm-checkout" onclick="checkout()">Confirm</button>
+            <button onclick="closeCheckoutModal()">Cancel</button>
+        </div>
+    </div>
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let total = cart.reduce((acc, item) => acc + item.price, 0);
+updateCart();
+
+function addToCart(item, price) {
+    const existingItem = cart.find(cartItem => cartItem.item === item);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+        existingItem.price += price;
+    } else {
+        cart.push({ item, price, quantity: 1 });
+    }
+    
+    total += price;
+    updateCart();
+    showNotification(`${item} added to cart!`);
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
+    const totalDiv = document.getElementById('total');
+    const cartCount = document.getElementById('cart-count');
+
+    cartItemsDiv.innerHTML = '';
+    cart.forEach(cartItem => {
+        cartItemsDiv.innerHTML += `
+            <div class="cart-item">
+                <span>${cartItem.item} - $${cartItem.price.toFixed(2)} (${cartItem.quantity})</span>
+                <button onclick="removeFromCart('${cartItem.item}')">Remove</button>
+                <button onclick="updateQuantity('${cartItem.item}', 'increase')">+</button>
+                <button onclick="updateQuantity('${cartItem.item}', 'decrease')">-</button>
+            </div>`;
+    });
+
+    totalDiv.innerHTML = `Total: $${total.toFixed(2)}`;
+    cartCount.innerText = cart.length;
+}
+
+function updateQuantity(item, action) {
+    const existingItem = cart.find(cartItem => cartItem.item === item);
+    
+    if (existingItem) {
+        if (action === 'increase') {
+            existingItem.quantity += 1;
+            existingItem.price += (existingItem.price / existingItem.quantity);
+            total += (existingItem.price / existingItem.quantity);
+        } else if (action === 'decrease' && existingItem.quantity > 1) {
+            existingItem.quantity -= 1;
+            existingItem.price -= (existingItem.price / (existingItem.quantity + 1));
+            total -= (existingItem.price / (existingItem.quantity + 1));
+        }
+        updateCart();
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+}
+
+function removeFromCart(item) {
+    const index = cart.findIndex(cartItem => cartItem.item === item);
+    if (index > -1) {
+        total -= cart[index].price;
+        cart.splice(index, 1);
+        updateCart();
+        showNotification(`${item} removed from cart.`);
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+}
+
+function openCheckoutModal() {
+    document.getElementById('checkout-modal').style.display = 'block';
+    document.getElementById('checkout-total').innerText = total.toFixed(2);
+}
+
+function closeCheckoutModal() {
+    document.getElementById('checkout-modal').style.display = 'none';
+}
+
+function checkout() {
+    alert(`Proceeding to checkout with total: $${total.toFixed(2)}`);
+    cart = [];
+    total = 0;
+    updateCart();
+    localStorage.removeItem('cart');
+    closeCheckoutModal();
+}
+
+function showNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.innerText = message;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
+}
+
+function scrollToCart() {
+    document.getElementById('cart').scrollIntoView({ behavior: 'smooth' });
+}
+
+function filterProducts() {
+    const query = document.getElementById('search').value.toLowerCase();
+    const products = document.querySelectorAll('.product');
+    
+    products.forEach(product => {
+        const title = product.querySelector('h2').innerText.toLowerCase();
+        product.style.display = title.includes(query) ? 'block' : 'none';
+    });
+}
+
+function filterByCategory(category) {
+    const products = document.querySelectorAll('.product');
+    
+    products.forEach(product => {
+        const productCategory = product.getAttribute('data-category');
+        product.style.display = category === 'All' || productCategory === category ? 'block' : 'none';
+    });
+}
+
+</script>
+</body>
+</html>
